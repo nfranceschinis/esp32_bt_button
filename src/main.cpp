@@ -41,7 +41,7 @@ void loop()
     if (isPressed)  {
       if ((millis() - lastPressed) > timeout) { //If interrupt was not caused by a debounce signal 
         Serial.println("Button pressed!");      //debug
-        keyboard.write(KEY_BACKSPACE);
+        keyboard.write(KEY_MEDIA_NEXT_TRACK);
         keyboard.releaseAll();
         isPressed = false;
         lastPressed = millis();

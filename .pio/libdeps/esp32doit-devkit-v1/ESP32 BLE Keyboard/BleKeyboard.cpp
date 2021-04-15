@@ -103,7 +103,7 @@ void BleKeyboard::begin(void)
 }
 
 void BleKeyboard::end(void)
-{
+{//Ecco la magagna!
 }
 
 bool BleKeyboard::isConnected(void) {
