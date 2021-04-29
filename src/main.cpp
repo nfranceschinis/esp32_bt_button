@@ -27,9 +27,9 @@ void setup()  {
   attachInterrupt(button_pin, async, RISING); //Interrupt initialization
   Serial.begin(115200);                       //Serial debug init
   Serial.println("Starting keyboard system");
-  /*if (digitalRead(button_pin))  { //If button is pressed at startup, enter in configuration mode
+  if (digitalRead(button_pin))  { //If button is pressed at startup, enter in configuration mode
     configuration();
-  }*/
+  }
   keyboard.begin(); //BLEKeyboard initialization
   batteryLevel();
 }
