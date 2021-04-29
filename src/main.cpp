@@ -11,6 +11,8 @@
 bool isPressed = false;
 unsigned long lastPressed = 0;
 unsigned long lastRestart = 0;
+unsigned long lastLedStat = 0;
+int ledIndex = 0;
 
 BleKeyboard keyboard("Button Accessibility", "Nicola Franceschinis", 100); //BLEKeyboard definition --> Format ("Name", "Creator", battery_percentage)
 //BluetoothSerial ESP_BT;
@@ -50,7 +52,7 @@ void loop()
     }
   }
   else{
-    digitalWrite(led_pin, LOW);
+    blinky(0);  
     connection();
   }
 }

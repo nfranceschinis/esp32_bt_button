@@ -21,12 +21,9 @@ void connection() {                 //Restart BLEKeyboard istance function
 }
 
 void blinky(int mode) {
-    digitalWrite(led_pin, LOW);                         //Led status initialization
-    unsigned long interval = 0;                         //Interval memory (for waiting routine)
-    for(int index=0;index < 8;index++){
-        digitalWrite(led_pin,patterns[mode][index]);    //Reading current status from patterns table 
-        while(millis() - interval < led_step){}         //Waiting routine between next status reading
-        interval = millis();
-    }
+    ledIndex++;                                         //Increment vector pointer
+    if(ledIndex > 7)
+        ledIndex = 0;
+    digitalWrite(led_pin,patterns[mode][ledIndex]);    //Reading current status from patterns table 
 }
 
