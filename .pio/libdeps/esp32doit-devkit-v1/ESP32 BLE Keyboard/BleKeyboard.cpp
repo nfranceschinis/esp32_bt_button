@@ -103,8 +103,16 @@ void BleKeyboard::begin(void)
 }
 
 void BleKeyboard::end(void)
-{//Ecco la magagna!
+{//Ecco la magagna!	
 }
+
+/*void BleKeyboard::handling(void)
+{
+	if( xHandle != NULL )
+       {
+        vTaskDelete( xHandle );
+       }
+}*/
 
 bool BleKeyboard::isConnected(void) {
   return this->connectionStatus->connected;
