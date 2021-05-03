@@ -14,7 +14,7 @@ unsigned long lastRestart = 0;
 unsigned long lastLedStat = 0;
 int ledIndex = 0;
 
-BleKeyboard keyboard("Button Accessibility", "Nicola Franceschinis", 100); //BLEKeyboard definition --> Format ("Name", "Creator", battery_percentage)
+BleKeyboard keyboard("Cjosul button", "Nicola Franceschinis", 100); //BLEKeyboard definition --> Format ("Name", "Creator", battery_percentage)
 //BluetoothSerial ESP_BT;
 Preferences statics;
 
@@ -32,6 +32,7 @@ void setup()  {
   if (digitalRead(button_pin))  { //If button is pressed at startup, enter in configuration mode
     configuration();
   }
+  //keyboard.taskServer(&keyboard);
   keyboard.begin(); //BLEKeyboard initialization
   batteryLevel();
 }
@@ -52,7 +53,6 @@ void loop()
     }
   }
   else{
-    blinky(0);  
-    connection();
+    digitalWrite(led_pin, LOW);
   }
 }
