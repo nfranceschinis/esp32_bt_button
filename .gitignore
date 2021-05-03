@@ -3,3 +3,4 @@ platformio.ini
 *.workspace
 .vscode/
 *.code-workspace
+*.csv

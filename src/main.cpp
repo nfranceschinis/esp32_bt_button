@@ -3,36 +3,38 @@
 #include <BleKeyboard.h>     //For normal use
 #include <BluetoothSerial.h> //For configuration use
 
-#define button_pin 2 //Button pin
-#define led_pin 15     //Button's led pin
+#define button_pin 5 //Button pin 2
+#define led_pin LED_BUILTIN     //Button's led pin 15
 #define timeout 200  //Anti-debounging time
 #define connection_timeout 3000   //Timeout before restart BLEKeyboard in order to be seen
-#define led_step 300  //Minimum interval between led change status (used in blinky())
+#define led_step 1000  //Minimum interval between led change status (used in blinky())
+
 bool isPressed = false;
+bool wasConnected = false;      //Flag for one-time setup for 
 unsigned long lastPressed = 0;
 unsigned long lastRestart = 0;
 unsigned long lastLedStat = 0;
 int ledIndex = 0;
 
-BleKeyboard keyboard("Cjosul button", "Nicola Franceschinis", 100); //BLEKeyboard definition --> Format ("Name", "Creator", battery_percentage)
-//BluetoothSerial ESP_BT;
+BleKeyboard keyboard("Cjosul button", "CjosuLab", 100); //BLEKeyboard definition --> Format ("Name", "Creator", battery_percentage)
+BluetoothSerial keyboard_config;
 Preferences statics;
 
 #include <tables.h>                                                    //Bluetooth serial definition (for configuration only)
 #include <functions.h>
 
 void setup()  {
-  //statics.begin("tastiera_esp32", false);
   pinMode(led_pin, OUTPUT);                   //Led pin initialization
   digitalWrite(led_pin, LOW);                 //Led initialization
   pinMode(button_pin, INPUT_PULLUP);          //Button pin initialization
-  attachInterrupt(button_pin, async, RISING); //Interrupt initialization
   Serial.begin(115200);                       //Serial debug init
   Serial.println("Starting keyboard system");
-  if (digitalRead(button_pin))  { //If button is pressed at startup, enter in configuration mode
+  if (!digitalRead(button_pin))  { //If button is pressed at startup, enter in configuration mode
+    keyboard_config.begin("Cjosul_config");
     configuration();
+    keyboard_config.end();
   }
-  //keyboard.taskServer(&keyboard);
+  attachInterrupt(button_pin, async, RISING); //Interrupt initialization
   keyboard.begin(); //BLEKeyboard initialization
   batteryLevel();
 }
@@ -53,6 +55,6 @@ void loop()
     }
   }
   else{
-    digitalWrite(led_pin, LOW);
+    blinky(0);
   }
 }
