@@ -8,6 +8,7 @@
 #define timeout 200  //Anti-debounging time
 #define connection_timeout 3000   //Timeout before restart BLEKeyboard in order to be seen
 #define led_step 1000  //Minimum interval between led change status (used in blinky())
+#define buffer_lenght 10   //Size of buffer for Serial comunication
 
 bool isPressed = false;
 bool wasConnected = false;      //Flag for one-time setup for 
@@ -55,6 +56,6 @@ void loop()
     }
   }
   else{
-    blinky(0);
+    blinky(0);          //UI mode: not connected
   }
 }
