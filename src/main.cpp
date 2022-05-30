@@ -3,8 +3,8 @@
 #include <BleKeyboard.h>     //For normal use
 #include <BluetoothSerial.h> //For configuration use
 
-#define button_pin 2 //Button pin 5
-#define led_pin 15     //Button's led pin LED_BUILTIN
+#define button_pin 5 //Button pin 2
+#define led_pin LED_BUILTIN     //Button's led pin 15
 #define timeout 200  //Anti-debounging time
 #define connection_timeout 3000   //Timeout before restart BLEKeyboard in order to be seen
 #define led_step 1000  //Minimum interval between led change status (used in blinky())
@@ -30,11 +30,11 @@ void setup()  {
   pinMode(button_pin, INPUT_PULLUP);          //Button pin initialization
   Serial.begin(115200);                       //Serial debug init
   Serial.println("Starting keyboard system");
-  /*if (!digitalRead(button_pin))  { //If button is pressed at startup, enter in configuration mode
+  if (!digitalRead(button_pin))  { //If button is pressed at startup, enter in configuration mode
     keyboard_config.begin("Cjosul_config");
     configuration();
     keyboard_config.end();
-  }*/
+  }
   attachInterrupt(button_pin, async, RISING); //Interrupt initialization
   keyboard.begin(); //BLEKeyboard initialization
   batteryLevel();
@@ -47,7 +47,7 @@ void loop()
     if (isPressed)  {
       if ((millis() - lastPressed) > timeout) { //If interrupt was not caused by a debounce signal 
         Serial.println("Button pressed!");      //debug
-        keyboard.write(KEY_MEDIA_NEXT_TRACK);
+        keyboard.write(KEY_MEDIA_VOLUME_DOWN);
         keyboard.releaseAll();
         isPressed = false;
         lastPressed = millis();
